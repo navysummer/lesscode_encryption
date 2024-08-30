@@ -36,8 +36,15 @@ jobs:
       - name: Install maturin
         run: pip install maturin
 
-      - name: Build and publish wheel
+      - name: Build and publish wheel on window or macos
+        if: runner.os != 'Linux'
         run: maturin build --release
+
+      - name: Build and publish wheel on linux
+        if: runner.os == 'Linux'
+        run: |
+          docker build -t my-build-env .
+          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace my-build-env maturin build --release
 
       - name: Audit and repair wheel (Linux only)
         if: runner.os == 'Linux'
