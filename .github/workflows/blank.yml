@@ -8,7 +8,7 @@ on:
     branches:
       - main
 
-var:
+env:
   OS: [ windows-2019 ]
   PYTHON_VERSION: [ 3.7, 3.8, 3.9 ]
 
@@ -19,8 +19,8 @@ jobs:
 
     strategy:
       matrix:
-        os: ${{ var.OS }}
-        python-version: ${{ var.PYTHON_VERSION }}
+        os: ${{ env.OS }}
+        python-version: ${{ env.PYTHON_VERSION }}
 
     steps:
       - name: Checkout code
@@ -54,11 +54,11 @@ jobs:
     name: Publish to PyPI
     needs: build
     runs-on: ${{ matrix.os }}
-    
+
     strategy:
       matrix:
-        os: ${{ var.OS }}
-        python-version: ${{ var.PYTHON_VERSION }}
+        os: ${{ env.OS }}
+        python-version: ${{ env.PYTHON_VERSION }}
 
     steps:
       - name: Download wheels
