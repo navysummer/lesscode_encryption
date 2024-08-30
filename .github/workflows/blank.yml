@@ -8,6 +8,10 @@ on:
     branches:
       - main
 
+var:
+  OS: [ windows-2019 ]
+  PYTHON_VERSION: [ 3.7, 3.8, 3.9 ]
+
 jobs:
   build:
     name: Build and Package
@@ -15,8 +19,8 @@ jobs:
 
     strategy:
       matrix:
-        os: [ ubuntu-22.04, windows-2019 ]
-        python-version: [ 3.7, 3.8, 3.9 ]
+        os: ${{ var.OS }}
+        python-version: ${{ var.PYTHON_VERSION }}
 
     steps:
       - name: Checkout code
@@ -40,22 +44,6 @@ jobs:
         if: runner.os != 'Linux'
         run: maturin build --release
 
-      #      - name: Build and publish wheel on linux
-      #        if: runner.os == 'Linux'
-      #        run: |
-      #          echo ${{ github.workspace }}
-      #          ls -al ${{ github.workspace }}
-      #          docker build -t my-build-env ${{ github.workspace }}
-      #          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace my-build-env maturin build --release
-      #
-      #      - name: Audit and repair wheel (Linux only)
-      #        if: runner.os == 'Linux'
-      #        run: |
-      #          pip install auditwheel
-      #          for whl in target/wheels/*.whl; do
-      #            auditwheel repair "$whl" -w target/wheels/
-      #          done
-
       - name: Upload built wheels
         uses: actions/upload-artifact@v3
         with:
@@ -65,7 +53,12 @@ jobs:
   publish:
     name: Publish to PyPI
     needs: build
-    runs-on: windows-2019
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      matrix:
+        os: ${{ var.OS }}
+        python-version: ${{ var.PYTHON_VERSION }}
 
     steps:
       - name: Download wheels
