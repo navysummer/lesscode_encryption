@@ -43,7 +43,9 @@ jobs:
       - name: Build and publish wheel on linux
         if: runner.os == 'Linux'
         run: |
-          docker build -t my-build-env .
+          echo ${{ github.workspace }}
+          ls -al ${{ github.workspace }}
+          docker build -t my-build-env ${{ github.workspace }} 
           docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace my-build-env maturin build --release
 
       - name: Audit and repair wheel (Linux only)
