@@ -65,17 +65,17 @@ jobs:
   publish:
     name: Publish to PyPI
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: windows-2019
 
     steps:
       - name: Download wheels
         uses: actions/download-artifact@v3
         with:
-          name: wheels-ubuntu-latest-${{ matrix.python-version }}
+          name: wheels-windows-2019-${{ matrix.python-version }}
           path: dist/
 
       - name: Install Twine
-        run: pip install twine
+        run: pip3 install twine
 
       - name: Publish to PyPI
         env:
