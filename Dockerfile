@@ -2,11 +2,17 @@ FROM quay.io/pypa/manylinux2014_x86_64
 WORKDIR /workspace
 COPY . ./lesscode_encryption
 
+<<<<<<< HEAD
 RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 RUN curl -o /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo
 RUN yum install epel-release -y
 RUN yum clean all
 RUN yum makecache
+=======
+# 安装 Python 和 Rust
+RUN yum install -y python3 python3-pip python3-wheel python3-setuptools
+RUN pip3 install maturin tomli
+>>>>>>> 2d13bce71117cb442e03863de47ba950dcfdcf6a
 
 RUN yum -y install curl wget libffi-devel zlib-devel bzip2-devel openssl-devel openssl-static ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel libffi-devel lzma gcc
 RUN mkdir /usr/local/python3

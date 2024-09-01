@@ -8,6 +8,8 @@ on:
     branches:
       - main
 
+
+
 jobs:
   build:
     name: Build and Package
@@ -83,7 +85,7 @@ jobs:
   publish:
     name: Publish to PyPI
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Download wheels
@@ -93,7 +95,7 @@ jobs:
           path: dist/
 
       - name: Install Twine
-        run: pip install twine
+        run: pip3 install twine
 
       - name: Publish to PyPI
         env:
