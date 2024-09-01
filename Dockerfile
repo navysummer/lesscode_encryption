@@ -2,8 +2,8 @@ FROM quay.io/pypa/manylinux2014_x86_64
 WORKDIR /workspace
 COPY . ./lesscode_encryption
 
-RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
-RUN curl -o /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo
+#RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+#RUN curl -o /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo
 RUN yum install epel-release -y
 RUN yum clean all
 RUN yum makecache

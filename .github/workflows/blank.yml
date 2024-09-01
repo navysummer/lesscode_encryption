@@ -19,21 +19,6 @@ jobs:
       matrix:
         os: [ ubuntu-22.04, macos-12, windows-2019 ]
         python-version: [ 3.8 ]
-        include:
-        - os: ubuntu-22.04
-          python-version: 3.8
-        - os: windows-2019
-          python-version: 3.7
-        - os: windows-2019
-          python-version: 3.8
-        - os: windows-2019
-          python-version: 3.9
-        - os: macos-12
-          python-version: 3.7
-        - os: macos-12
-          python-version: 3.8
-        - os: macos-12
-          python-version: 3.9
 
     steps:
       - name: Checkout code
@@ -55,7 +40,7 @@ jobs:
 
       - name: Build and publish wheel on window or macos
         if: runner.os != 'Linux'
-        run: maturin build --release
+        run: maturin build --release --interpreter python3.7 python3.8 python3.9 python3.10
 
       - name: Build and publish wheel on linux
         if: runner.os == 'Linux'
@@ -87,7 +72,7 @@ jobs:
       - name: Download wheels
         uses: actions/download-artifact@v3
         with:
-          name: wheels-${{ matrix.python-version }}
+          name: wheels-${{ matrix.os }}-${{ matrix.python-version }}
           path: dist/
 
       - name: Install Twine
