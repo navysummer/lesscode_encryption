@@ -4,7 +4,7 @@ from setuptools_rust import Binding, RustExtension
 with open("README.md") as f:
     long_description = f.read()
 
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 
 setup(
     name="lesscode_encryption",
